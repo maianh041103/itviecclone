@@ -7,7 +7,10 @@ import { IUser } from 'src/users/user.interface';
 import { RolesService } from 'src/roles/roles.service';
 import { Throttle } from '@nestjs/throttler';
 import { ThrottlerGuard } from '@nestjs/throttler'
+import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { UserLoginDto } from './dto/user-login.dto';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -25,6 +28,7 @@ export class AuthController {
   @Public() //decorator customize
   @UseGuards(LocalAuthGuard)
   @UseGuards(ThrottlerGuard)
+  @ApiBody({ type: UserLoginDto })
   @Throttle({ default: { limit: 3, ttl: 60000 } })
   @Post('/login')
   async login(@Req() req, @Res({ passthrough: true }) response: Response) {
