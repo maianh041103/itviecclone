@@ -19,6 +19,7 @@ import { DatabasesModule } from './databases/databases.module';
 import { SubscribersModule } from './subscribers/subscribers.module';
 import { MailModule } from './mail/mail.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -37,6 +38,10 @@ import { ScheduleModule } from '@nestjs/schedule';
     ConfigModule.forRoot({
       isGlobal: true //Dùng không cần khai báo
     }),
+    ThrottlerModule.forRoot([{
+      ttl: 60000, //đơn vị ms
+      limit: 2
+    }]),
     UsersModule,
     AuthModule,
     CompanyModule,

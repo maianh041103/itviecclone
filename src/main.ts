@@ -7,6 +7,7 @@ import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TransformInterceptor } from './core/transform.intercepter';
 import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -49,6 +50,10 @@ async function bootstrap() {
   //Set cookieParse
   app.use(cookieParser());
   //End set cookieParse
+
+  //Helmet
+  app.use(helmet());
+  //End helmet
 
   const configService = app.get(ConfigService);
   await app.listen(configService.get('PORT'));

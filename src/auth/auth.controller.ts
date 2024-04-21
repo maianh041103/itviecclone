@@ -4,8 +4,9 @@ import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
 import { IUser } from 'src/users/user.interface';
-import { RolesController } from 'src/roles/roles.controller';
 import { RolesService } from 'src/roles/roles.service';
+import { Throttle } from '@nestjs/throttler';
+import { ThrottlerGuard } from '@nestjs/throttler'
 
 @Controller('auth')
 export class AuthController {
@@ -23,6 +24,8 @@ export class AuthController {
 
   @Public() //decorator customize
   @UseGuards(LocalAuthGuard)
+  @UseGuards(ThrottlerGuard)
+  @Throttle({ default: { limit: 3, ttl: 60000 } })
   @Post('/login')
   async login(@Req() req, @Res({ passthrough: true }) response: Response) {
     return this.authService.login(req.user, response);
