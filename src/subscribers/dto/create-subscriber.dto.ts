@@ -3,7 +3,7 @@ import { IsArray, IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateSubscriberDto {
   @ApiProperty()
-  @IsEmail({ message: "Định dạng email không chính xác" })
+  @IsEmail({}, { message: "Định dạng email không chính xác" })
   @IsNotEmpty({ message: "Email không được để trống" })
   email: string;
 
