@@ -28,7 +28,7 @@ import { HealthModule } from './health/health.module';
     MongooseModule.forRootAsync({
       imports: [ConfigModule, UsersModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<String>("MONGOOSE"),
+        uri: configService.get<string>("MONGOOSE"),
         connectionFactory: (connection) => {
           connection.plugin(softDeletePlugin);
           return connection;
