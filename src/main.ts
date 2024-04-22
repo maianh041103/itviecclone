@@ -32,7 +32,7 @@ async function bootstrap() {
 
   //CORS
   app.enableCors({
-    origin: true,
+    origin: ['http://localhost:3000', 'https://itviecclonefe.vercel.app'],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
     optionsSuccessStatus: 204,
