@@ -12,6 +12,9 @@ class Company {
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  logo: string;
 }
 
 export class CreateJobDto {
@@ -31,6 +34,10 @@ export class CreateJobDto {
   @ValidateNested()
   @Type(() => Company)
   company: Company;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  location: string;
 
   @ApiProperty()
   @IsNotEmpty()
