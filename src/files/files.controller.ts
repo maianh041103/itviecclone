@@ -6,25 +6,47 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Public, ResponseMessage } from 'src/decorator/customize';
 import { ApiTags } from '@nestjs/swagger';
 import { HttpExceptionFilter } from 'src/core/http-exception.filter';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 @ApiTags('File')
 @Controller('files')
 export class FilesController {
-  constructor(private readonly filesService: FilesService) { }
+  constructor(
+    private readonly filesService: FilesService,
+    private readonly cloudinaryService: CloudinaryService
+  ) { }
+
+  // @Public()
+  // @Post('upload')
+  // @ResponseMessage("Upload single file")
+  // @UseInterceptors(FileInterceptor('fileUpload'))
+  // @UseFilters(HttpExceptionFilter)
+  // uploadFile(@UploadedFile(
+  //   new ParseFilePipeBuilder()
+  //     .build({
+  //       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+  //     }),
+  // ) file: Express.Multer.File) {
+  //   return {
+  //     fileName: file.filename
+  //   }
+  // }
 
   @Public()
   @Post('upload')
-  @ResponseMessage("Upload single file")
+  @ResponseMessage("Upload single file to cloudinary")
   @UseInterceptors(FileInterceptor('fileUpload'))
-  @UseFilters(HttpExceptionFilter)
-  uploadFile(@UploadedFile(
-    new ParseFilePipeBuilder()
-      .build({
-        errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
-      }),
-  ) file: Express.Multer.File) {
-    return {
-      fileName: file.filename
+  async uploadImage(@UploadedFile(new ParseFilePipeBuilder()
+    .build({
+      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+    }),) file: Express.Multer.File) {
+    if (file) {
+      const res = await this.cloudinaryService.uploadFile(file);
+      return {
+        fileName: res["secure_url"]
+      }
+    } else {
+      return "Không thấy file";
     }
   }
 

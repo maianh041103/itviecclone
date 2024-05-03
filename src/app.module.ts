@@ -8,7 +8,6 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { softDeletePlugin } from 'soft-delete-plugin-mongoose';
-import { connect } from 'http2';
 import { CompanyModule } from './company/company.module';
 import { JobsModule } from './jobs/jobs.module';
 import { FilesModule } from './files/files.module';
@@ -21,6 +20,7 @@ import { MailModule } from './mail/mail.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { HealthModule } from './health/health.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -54,7 +54,8 @@ import { HealthModule } from './health/health.module';
     DatabasesModule,
     SubscribersModule,
     MailModule,
-    HealthModule
+    HealthModule,
+    CloudinaryModule
   ],
   controllers: [AppController],
   providers: [

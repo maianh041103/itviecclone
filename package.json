@@ -39,6 +39,7 @@
     "bcryptjs": "2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "cloudinary": "^2.2.0",
     "cookie-parser": "^1.4.6",
     "cron": "2.4.3",
     "ejs": "3.1.9",
@@ -53,7 +54,8 @@
     "passport-local": "1.0.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "7.2.0",
-    "soft-delete-plugin-mongoose": "1.0.15"
+    "soft-delete-plugin-mongoose": "1.0.15",
+    "streamifier": "^0.1.1"
   },
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.23",

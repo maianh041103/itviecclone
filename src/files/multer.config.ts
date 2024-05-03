@@ -9,49 +9,49 @@ import path, { join } from "path";
 @Injectable()
 export class MulterConfigService implements MulterOptionsFactory {
   //Lấy ra đường dẫn thư mục
-  getRootPath = () => {
-    return process.cwd(); //Thư mục hiện hành
-  }
+  // getRootPath = () => {
+  //   return process.cwd(); //Thư mục hiện hành
+  // }
 
-  //Kiểm tra chưa tồn tại thư mục thì tạo thư mục
-  ensureExists(targetDirectory: string) {
-    fs.mkdir(targetDirectory, { recursive: true }, (error) => {
-      if (!error) {
-        console.log('Directory successfully created, or it already exists.'); return;
-      }
-      switch (error.code) {
-        case 'EEXIST':
-        // Error:
-        // Requested location already exists, but it's not a directory. break;
-        case 'ENOTDIR':
-          // Error:
-          // The parent hierarchy contains a file with the same name as the dir // you're trying to create.
-          break;
-        default:
-          // Some other error like permission denied.
-          console.error(error); break;
-      }
-    });
-  }
+  // //Kiểm tra chưa tồn tại thư mục thì tạo thư mục
+  // ensureExists(targetDirectory: string) {
+  //   fs.mkdir(targetDirectory, { recursive: true }, (error) => {
+  //     if (!error) {
+  //       console.log('Directory successfully created, or it already exists.'); return;
+  //     }
+  //     switch (error.code) {
+  //       case 'EEXIST':
+  //       // Error:
+  //       // Requested location already exists, but it's not a directory. break;
+  //       case 'ENOTDIR':
+  //         // Error:
+  //         // The parent hierarchy contains a file with the same name as the dir // you're trying to create.
+  //         break;
+  //       default:
+  //         // Some other error like permission denied.
+  //         console.error(error); break;
+  //     }
+  //   });
+  // }
 
 
   createMulterOptions(): MulterOptions | Promise<MulterOptions> {
     return {
-      storage: diskStorage({ //Lưu dữ liệu ở trong ổ đĩa máy tính
-        destination: (req, file, cb) => {
-          const folder = req?.headers?.folder_type ?? "default"; //Lấy ra req.headers
-          this.ensureExists(`public/images/${folder}`);
-          cb(null, join(this.getRootPath(), `public/images/${folder}`));
-        },
-        filename: (req, file, cb) => { //get image
-          let extName = path.extname(file.originalname);
+      // storage: diskStorage({ //Lưu dữ liệu ở trong ổ đĩa máy tính
+      //   destination: (req, file, cb) => {
+      //     const folder = req?.headers?.folder_type ?? "default"; //Lấy ra req.headers
+      //     this.ensureExists(`public/images/${folder}`);
+      //     cb(null, join(this.getRootPath(), `public/images/${folder}`));
+      //   },
+      //   filename: (req, file, cb) => { //get image
+      //     let extName = path.extname(file.originalname);
 
-          let baseName = path.basename(file.originalname, extName);
+      //     let baseName = path.basename(file.originalname, extName);
 
-          let finalName = `${baseName}-${Date.now()}${extName}`
-          cb(null, finalName);
-        }
-      }),
+      //     let finalName = `${baseName}-${Date.now()}${extName}`
+      //     cb(null, finalName);
+      //   }
+      // }),
       limits: {
         fileSize: 1024 * 1024 * 1, //1MB
       },
